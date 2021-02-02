@@ -1,49 +1,49 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
 
-const app = props => {
-  // personsState is the actual data, and setPersonsState is the function that updates the state
-  // you can use 'useState' as many times as you want in a functional component
-  const [ personsState, setPersonsState ] = useState({
+class App extends Component {
+  state = {
     persons: [
-      { name: 'Tyler Ciarmataro', age: 23 },
-      { name: 'Meghan Hubbard', age: 22 },
-      { name: 'Jamie Ciarmataro', age: 20 },
-    ]
-  });
-  
-  const [ otherState, setOtherState ] = useState({
-    otherState: 'some other state?',
-  });
+      { name: 'Tyler', age: 33 },
+      { name: 'Meghan', age: 32 },
+      { name: 'Jamie', age: 30 }
+    ],
+    otherState: 'some other value'
+  };
 
-  console.log(personsState, otherState);
-
-  const switchName = () => {
-    // console.log("Name was switched!");
-    // DON'T DO THIS: this.state.persons[0].name = "Tyler"
-    /* When using Hooks you need to copy all information you don't want to delete, 
-      because 'setStateValues' replaces state variables */
-    setPersonsState({
+  switchNameHandler = (newName) => {
+    // console.log('Was clicked!');
+    // DON'T DO THIS: this.state.persons[0].name = 'Maximilian';
+    this.setState({
       persons: [
-        { name: 'Tyler', age: 23 },
-        { name: 'Meghan', age: 22 },
-        { name: 'Jamie', age: 20 },
-      ],
-      otherState: personsState.otherState,
+        { name: newName, age: 23 },
+        { name: 'Meghan Hubbard', age: 22 },
+        { name: 'Jamie Ciarmataro', age: 20 }
+      ]
     });
-  }
+  };
 
-  return (
-    <div className="App">
-      <h1>Hi! I'm a React App!</h1>
-      <p>This is really working!</p>
-      <button onClick={switchName}>Switch Name</button>
-      <Person name={personsState.persons[0].name} age={personsState.persons[0].age}>My Hobbies: Games/Puzzles</Person>
-      <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: TV/Movies</Person>
-      <Person name={personsState.persons[2].name} age={personsState.persons[2].age}>My Hobbies: Art</Person>
-    </div>
-  );
+  render() {
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler.bind(this, "Tyler Ciarmataro")}>Switch Name</button>
+        <Person
+          name={this.state.persons[0].name}
+          age={this.state.persons[0].age}
+          click={this.switchNameHandler.bind(this, "Tyler!")}>Title: Software Developer</Person>
+        <Person
+          name={this.state.persons[1].name}
+          age={this.state.persons[1].age}>Title: Teacher</Person>
+        <Person
+          name={this.state.persons[2].name}
+          age={this.state.persons[2].age}>Title: Artist</Person>
+      </div>
+    );
+    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
+  }
 }
 
-export default app;
+export default App;
