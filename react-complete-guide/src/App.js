@@ -9,7 +9,8 @@ class App extends Component {
       { name: 'Meghan', age: 32 },
       { name: 'Jamie', age: 30 }
     ],
-    otherState: 'some other value'
+    otherState: 'some other value',
+    personsVisible: false,
   };
 
   switchNameHandler = (newName) => {
@@ -34,6 +35,11 @@ class App extends Component {
     });
   }
 
+  togglePersonsHandler = () => {
+    // toggle 'personsVisible' boolean variable
+    this.setState({ personsVisible: !this.state.personsVisible });
+  }
+
   render() {
     const style = {
       backgroundColor: 'white',
@@ -50,18 +56,23 @@ class App extends Component {
         <p>This is really working!</p>
         <button 
           style={style}
-          onClick={this.switchNameHandler.bind(this, "Tyler Ciarmataro")}>Switch Name</button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-          click={this.switchNameHandler.bind(this, "Tyler!")}>Title: Software Developer</Person>
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          changed={this.nameChangedHandler}>Title: Teacher</Person>
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age}>Title: Artist</Person>
+          onClick={this.togglePersonsHandler}>Toggle Person List</button>
+        { //use ternary expressions (like below) to display content conditionally
+          this.state.personsVisible ? 
+            <div>
+              <Person
+                name={this.state.persons[0].name}
+                age={this.state.persons[0].age}
+                click={this.switchNameHandler.bind(this, "Tyler!")}>Title: Software Developer</Person>
+              <Person
+                name={this.state.persons[1].name}
+                age={this.state.persons[1].age}
+                changed={this.nameChangedHandler}>Title: Teacher</Person>
+              <Person
+                name={this.state.persons[2].name}
+                age={this.state.persons[2].age}>Title: Artist</Person>
+            </div> : null
+        }
       </div>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
