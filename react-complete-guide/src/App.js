@@ -50,32 +50,36 @@ class App extends Component {
       borderRadius: '5px',
     };
 
+    // check the value of state.personsVisible before the return statement
+    let personsList = null;
+    if (this.state.personsVisible) {
+      personsList = (
+        <div>
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age}
+            click={this.switchNameHandler.bind(this, "Tyler!")}>Title: Software Developer</Person>
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age}
+            changed={this.nameChangedHandler}>Title: Teacher</Person>
+          <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age}>Title: Artist</Person>
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p>This is really working!</p>
-        <button 
+        <button
           style={style}
           onClick={this.togglePersonsHandler}>Toggle Person List</button>
-        { //use ternary expressions (like below) to display content conditionally
-          this.state.personsVisible ? 
-            <div>
-              <Person
-                name={this.state.persons[0].name}
-                age={this.state.persons[0].age}
-                click={this.switchNameHandler.bind(this, "Tyler!")}>Title: Software Developer</Person>
-              <Person
-                name={this.state.persons[1].name}
-                age={this.state.persons[1].age}
-                changed={this.nameChangedHandler}>Title: Teacher</Person>
-              <Person
-                name={this.state.persons[2].name}
-                age={this.state.persons[2].age}>Title: Artist</Person>
-            </div> : null
-        }
+        {personsList}
       </div>
     );
-    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
