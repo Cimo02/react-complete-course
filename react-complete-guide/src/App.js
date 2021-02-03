@@ -3,36 +3,35 @@ import './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
+  // 'App' Variables
   state = {
     persons: [
-      { name: 'Tyler', age: 33 },
-      { name: 'Meghan', age: 32 },
-      { name: 'Jamie', age: 30 }
+      { id: '01', name: 'Octane', age: 5 },
+      { id: '02', name: 'Breakout', age: 3 },
+      { id: '03', name: 'Dominus', age: 4 }
     ],
     otherState: 'some other value',
     personsVisible: false,
   };
 
-  switchNameHandler = (newName) => {
-    // console.log('Was clicked!');
-    // DON'T DO THIS: this.state.persons[0].name = 'Maximilian';
-    this.setState({
-      persons: [
-        { name: newName, age: 23 },
-        { name: 'Meghan Hubbard', age: 22 },
-        { name: 'Jamie Ciarmataro', age: 20 }
-      ]
-    });
-  };
+  // 'App' Methods ---
+  // nameChangedHandler = (event) => {
+  //   this.setState({
+  //     persons: [
+  //       { name: 'Octane', age: 6 },
+  //       { name: event.target.value, age: 4 },
+  //       { name: 'Dominus', age: 5 }
+  //     ]
+  //   });
+  // }
 
-  nameChangedHandler = (event) => {
-    this.setState({
-      persons: [
-        { name: 'Tyler', age: 33 },
-        { name: event.target.value, age: 32 },
-        { name: 'Jamie', age: 30 }
-      ]
-    });
+  deletePersonHandler = (personIndex) => {
+    /* both lines copy the array instead of creating a pointer */
+    //const updatedPersons = this.state.persons.slice(); 
+    const updatedPersons = [...this.state.persons];
+    updatedPersons.splice(personIndex, 1);
+
+    this.setState({ persons: updatedPersons });
   }
 
   togglePersonsHandler = () => {
@@ -40,6 +39,7 @@ class App extends Component {
     this.setState({ personsVisible: !this.state.personsVisible });
   }
 
+  // 'App' Render Method ---
   render() {
     const style = {
       backgroundColor: 'white',
@@ -50,11 +50,22 @@ class App extends Component {
       borderRadius: '5px',
     };
 
-    // check the value of state.personsVisible before the return statement
+    // check the value of state.personsVisible before the return statement! It's best practice!
     let personsList = null;
     if (this.state.personsVisible) {
       personsList = (
         <div>
+          {this.state.persons.map((person, index) => {
+            return(
+              <Person 
+                click={() => this.deletePersonHandler(index)}
+                name={person.name}
+                age={person.age}
+                key={person.id}
+              />
+            );
+          })}
+          {/*
           <Person
             name={this.state.persons[0].name}
             age={this.state.persons[0].age}
@@ -65,15 +76,16 @@ class App extends Component {
             changed={this.nameChangedHandler}>Title: Teacher</Person>
           <Person
             name={this.state.persons[2].name}
-            age={this.state.persons[2].age}>Title: Artist</Person>
-        </div>
+          age={this.state.persons[2].age}>Title: Artist</Person>
+          */}
+          </div>
       );
     }
 
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
-        <p>This is really working!</p>
+        <p>This is really working! Click on someone to destory them!</p>
         <button
           style={style}
           onClick={this.togglePersonsHandler}>Toggle Person List</button>
@@ -81,6 +93,7 @@ class App extends Component {
       </div>
     );
   }
+
 }
 
 export default App;
