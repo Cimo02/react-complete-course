@@ -15,15 +15,20 @@ class App extends Component {
   };
 
   // 'App' Methods ---
-  // nameChangedHandler = (event) => {
-  //   this.setState({
-  //     persons: [
-  //       { name: 'Octane', age: 6 },
-  //       { name: event.target.value, age: 4 },
-  //       { name: 'Dominus', age: 5 }
-  //     ]
-  //   });
-  // }
+  nameChangedHandler = (event, id) => {
+    // ALWAYS make sure you copy the state data you want to manipulate first because else it will just be a pointer
+    const personIndex = this.state.persons.findIndex(p => { return p.id === id; });
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+    // change the persons name
+    person.name = event.target.value;
+    // create a copy of persons array and update it
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+    // update our persons state
+    this.setState({ persons: persons });
+  }
 
   deletePersonHandler = (personIndex) => {
     /* both lines copy the array instead of creating a pointer */
@@ -62,23 +67,11 @@ class App extends Component {
                 name={person.name}
                 age={person.age}
                 key={person.id}
+                changed={(event) => this.nameChangedHandler(event, person.id)}
               />
             );
           })}
-          {/*
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-            click={this.switchNameHandler.bind(this, "Tyler!")}>Title: Software Developer</Person>
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            changed={this.nameChangedHandler}>Title: Teacher</Person>
-          <Person
-            name={this.state.persons[2].name}
-          age={this.state.persons[2].age}>Title: Artist</Person>
-          */}
-          </div>
+        </div>
       );
     }
 
