@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Radium, { StyleRoot } from 'radium';
 import './App.css';
 import Person from './Person/Person';
 
@@ -54,6 +55,11 @@ class App extends Component {
       padding: '8px',
       cursor: 'pointer',
       borderRadius: '5px',
+      boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     };
 
     // check the value of state.personsVisible before the return statement! It's best practice!
@@ -74,10 +80,16 @@ class App extends Component {
           })}
         </div>
       );
-
+      // update style properties
       style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
     }
 
+    // TODO: **Note** Dynamically adding classes with javascript
+    // to use, call .join(' ') on the array of classNames
     let classes = [];
     if (this.state.persons.length <= 2){ 
       classes.push('red');
@@ -87,17 +99,19 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working! Click on someone to destory them!</p>
-        <button
-          style={style}
-          onClick={this.togglePersonsHandler}>Toggle Person List</button>
-        {personsList}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi, I'm a React App</h1>
+          <p className={classes.join(' ')}>This is really working! Click on someone to destory them!</p>
+          <button
+            style={style}
+            onClick={this.togglePersonsHandler}>Toggle Person List</button>
+          {personsList}
+        </div>
+      </StyleRoot>
     );
   }
 
 }
 
-export default App;
+export default Radium(App);
