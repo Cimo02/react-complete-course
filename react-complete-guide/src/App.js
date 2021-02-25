@@ -48,17 +48,25 @@ class App extends Component {
   // 'App' Render Method ---
   render() {
     const style = {
-      backgroundColor: 'green',
+      backgroundColor: '#5E8C5D',
       color: 'white',
       font: 'inherit',
-      border: '1px solid blue',
+      border: 'none',
       padding: '8px',
       cursor: 'pointer',
       borderRadius: '5px',
       boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
       ':hover': {
-        backgroundColor: 'lightgreen',
+        backgroundColor: '#97BF7A',
         color: 'black'
+      },
+      ':active': {
+        outline: '0',
+        border: 'none',
+      }, 
+      ':focus': {
+        outline: '0',
+        border: 'none',
       }
     };
 
@@ -81,9 +89,9 @@ class App extends Component {
         </div>
       );
       // update style properties
-      style.backgroundColor = 'red';
+      style.backgroundColor = '#F2594B';
       style[':hover'] = {
-        backgroundColor: 'salmon',
+        backgroundColor: '#F27E7E',
         color: 'black'
       }
     }

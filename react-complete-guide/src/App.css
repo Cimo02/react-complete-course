@@ -1,3 +1,15 @@
+/* Color Theme Swatches in RGBA */
+.Passiflora-Films-Branding-1-rgba { color: rgba(217, 210, 211, 1); }
+.Passiflora-Films-Branding-2-rgba { color: rgba(109, 88, 115, 1); }
+.Passiflora-Films-Branding-3-rgba { color: rgba(174, 149, 191, 1); }
+.Passiflora-Films-Branding-4-rgba { color: rgba(38, 38, 38, 1); }
+.Passiflora-Films-Branding-5-rgba { color: rgba(13, 13, 13, 1); }
+
+body {
+  background-color: rgba(38, 38, 38, 1);
+  color: rgba(217, 210, 211, 1);
+}
+
 .App {
   text-align: center;
 }
