@@ -1,7 +1,30 @@
 import React, { Component } from 'react';
-import Radium, { StyleRoot } from 'radium';
+import styled from 'styled-components';
 import './App.css';
 import Person from './Person/Person';
+
+const StyledButton = styled.button`
+  background-color: ${props => props.alt ? '#F2594B' : '#5E8C5D'};
+  color: white;
+  font: inherit;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  &:hover {
+    background-color: ${props => props.alt ? '#F27E7E' : '#97BF7A'};
+    color: black;
+  },
+  &:active {
+    outline: 0;
+    border: none;
+  }, 
+  &:focus {
+    outline: 0;
+    border: none;
+  }
+`;
 
 class App extends Component {
   // 'App' Variables
@@ -47,29 +70,6 @@ class App extends Component {
 
   // 'App' Render Method ---
   render() {
-    const style = {
-      backgroundColor: '#5E8C5D',
-      color: 'white',
-      font: 'inherit',
-      border: 'none',
-      padding: '8px',
-      cursor: 'pointer',
-      borderRadius: '5px',
-      boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
-      ':hover': {
-        backgroundColor: '#97BF7A',
-        color: 'black'
-      },
-      ':active': {
-        outline: '0',
-        border: 'none',
-      }, 
-      ':focus': {
-        outline: '0',
-        border: 'none',
-      }
-    };
-
     // check the value of state.personsVisible before the return statement! It's best practice!
     let personsList = null;
     if (this.state.personsVisible) {
@@ -88,12 +88,6 @@ class App extends Component {
           })}
         </div>
       );
-      // update style properties
-      style.backgroundColor = '#F2594B';
-      style[':hover'] = {
-        backgroundColor: '#F27E7E',
-        color: 'black'
-      }
     }
 
     // TODO: **Note** Dynamically adding classes with javascript
@@ -107,19 +101,17 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
-        <div className="App">
-          <h1>Hi, I'm a React App</h1>
-          <p className={classes.join(' ')}>This is really working! Click on someone to destory them!</p>
-          <button
-            style={style}
-            onClick={this.togglePersonsHandler}>Toggle Person List</button>
-          {personsList}
-        </div>
-      </StyleRoot>
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working! Click on someone to destory them!</p>
+        <StyledButton alt={this.state.personsVisible} onClick={this.togglePersonsHandler}>
+          Toggle Person List
+        </StyledButton>
+        {personsList}
+      </div>
     );
   }
 
 }
 
-export default Radium(App);
+export default App;
